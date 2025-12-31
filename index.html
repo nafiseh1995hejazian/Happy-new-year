@@ -23,12 +23,11 @@
             overflow: hidden;
         }
         
-        /* استایل کانتینر اصلی */
+        /* کانتینر اصلی */
         .scene {
             width: 100%;
             max-width: 800px;
             height: 600px;
-            perspective: 1200px;
             position: relative;
         }
         
@@ -37,15 +36,14 @@
             width: 100%;
             height: 100%;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             cursor: pointer;
             z-index: 10;
+            transform-style: preserve-3d;
+            transition: transform 1s ease;
         }
         
         .envelope.opened {
-            transform: translateY(-100px) rotateX(180deg);
-            cursor: default;
+            transform: translateY(-50px);
         }
         
         /* بدنه پاکت */
@@ -67,6 +65,7 @@
             align-items: center;
             padding: 40px;
             overflow: hidden;
+            z-index: 2;
         }
         
         /* درپوش پاکت */
@@ -79,16 +78,16 @@
             top: 0;
             left: 0;
             transform-origin: top;
-            transition: transform 1.2s 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: transform 1s ease;
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
-            z-index: 2;
+            z-index: 3;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         
         .envelope.opened .envelope-flap {
-            transform: rotateX(-180deg);
+            transform: rotateX(-120deg);
         }
         
         /* مهر پاکت */
@@ -106,8 +105,9 @@
             border: 3px solid #ff9800;
             position: absolute;
             top: -40px;
-            animation: sealGlow 2s infinite alternate;
+            z-index: 4;
             cursor: pointer;
+            animation: sealGlow 2s infinite alternate;
         }
         
         @keyframes sealGlow {
@@ -115,12 +115,14 @@
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
                           inset 0 5px 15px rgba(255, 255, 255, 0.2),
                           0 0 10px #ffd700;
+                transform: scale(1);
             }
             100% { 
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
                           inset 0 5px 15px rgba(255, 255, 255, 0.2),
                           0 0 25px #ffd700,
                           0 0 35px #ff9800;
+                transform: scale(1.1);
             }
         }
         
@@ -139,6 +141,7 @@
             border-radius: 10px;
             border: 2px dashed rgba(255, 255, 255, 0.3);
             animation: addressGlow 3s infinite alternate;
+            z-index: 2;
         }
         
         @keyframes addressGlow {
@@ -166,9 +169,9 @@
             height: 85%;
             background: linear-gradient(145deg, #fffaf0, #fff5e6);
             border-radius: 15px;
-            bottom: -100%;
+            top: 110%;
             left: 5%;
-            transition: bottom 1s 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: top 1s 0.5s ease;
             box-shadow: 
                 0 -10px 40px rgba(0, 0, 0, 0.2),
                 inset 0 0 50px rgba(255, 215, 0, 0.1);
@@ -182,7 +185,7 @@
         }
         
         .envelope.opened .card-inside {
-            bottom: 5%;
+            top: 5%;
         }
         
         /* محتوای کارت */
@@ -194,7 +197,7 @@
             justify-content: space-between;
             opacity: 0;
             transform: translateY(30px);
-            transition: all 1s 1.5s ease;
+            transition: all 1s 1s ease;
         }
         
         .envelope.opened .card-content {
@@ -248,20 +251,16 @@
         .greeting-message p {
             margin-bottom: 15px;
             position: relative;
-            padding-right: 20px;
         }
         
-        .greeting-message p::before {
-            content: "❄️";
-            position: absolute;
-            right: -25px;
-            top: 0;
-            animation: snowFloat 4s infinite;
-        }
-        
-        @keyframes snowFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .greeting-message p.highlight {
+            color: #b91d1d;
+            font-weight: bold;
+            font-size: 1.5em;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
         }
         
         /* امضا */
@@ -340,6 +339,7 @@
             max-width: 250px;
             border-left: 4px solid #ffd700;
             animation: instructionsPulse 4s infinite;
+            z-index: 100;
         }
         
         @keyframes instructionsPulse {
@@ -356,6 +356,33 @@
             pointer-events: none;
             z-index: 5;
         }
+        
+        /* دکمه راهنما */
+        .click-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.9);
+            color: #8b0000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            animation: hintBounce 2s infinite;
+            z-index: 5;
+            cursor: pointer;
+            border: 2px solid #8b0000;
+        }
+        
+        @keyframes hintBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        /* صدای کلیک */
+        .click-sound {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -365,7 +392,7 @@
         <strong>Nasıl Açılır:</strong><br>
         1. Altın mühre tıklayın<br>
         2. Pencereyi açın<br>
-        3. Müziği başlatın
+        3. Müziği başlatmak için butona tıklayın
     </div>
     
     <!-- کنترل موسیقی -->
@@ -373,8 +400,18 @@
         <i class="fas fa-play" id="musicIcon"></i>
     </div>
     
+    <!-- صدای کلیک (پنهان) -->
+    <audio class="click-sound" id="clickSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+    
     <!-- صحنه اصلی -->
     <div class="scene">
+        <!-- راهنمای کلیک -->
+        <div class="click-hint" onclick="openEnvelope()">
+            <i class="fas fa-hand-point-up"></i> Mühre Tıklayın
+        </div>
+        
         <!-- پاکت نامه -->
         <div class="envelope" id="envelope">
             <!-- بدنه پاکت -->
@@ -388,7 +425,7 @@
                 </div>
                 
                 <!-- مهر پاکت -->
-                <div class="envelope-seal" onclick="openEnvelope()">
+                <div class="envelope-seal" onclick="playClickSound(); openEnvelope()">
                     <i class="fas fa-gem"></i>
                 </div>
             </div>
@@ -414,9 +451,7 @@
                     <div class="greeting-message">
                         <p>Sevgili Arkadaşım,</p>
                         <p>Yeni yılın sana ve sevdiklerine</p>
-                        <p style="color: #b91d1d; font-weight: bold; font-size: 1.5em;">
-                            sağlık, mutluluk ve başarı
-                        </p>
+                        <p class="highlight">sağlık, mutluluk ve başarı</p>
                         <p>getirmesini dilerim.</p>
                         <p>2026, hayallerinin gerçek olduğu,</p>
                         <p>hedeflerine ulaştığın bir yıl olsun.</p>
@@ -440,28 +475,60 @@
         // موسیقی
         let music = null;
         let isPlaying = false;
+        let userInteracted = false;
         
-        // آهنگ سال نو
-        const musicUrl = "https://assets.mixkit.co/music/preview/mixkit-christmas-is-coming-1192.mp3";
+        // آهنگ جایگزین (کوتاه‌تر و مطمئن‌تر)
+        const musicUrl = "https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3";
         
+        // صداهای دیگر
+        const openSoundUrl = "https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3";
+        const magicSoundUrl = "https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3";
+        
+        // پخش صدای کلیک
+        function playClickSound() {
+            const clickSound = document.getElementById('clickSound');
+            clickSound.currentTime = 0;
+            clickSound.play().catch(e => console.log("Click sound couldn't play"));
+        }
+        
+        // کنترل موسیقی
         function toggleMusic() {
+            playClickSound();
+            
+            if (!userInteracted) {
+                userInteracted = true;
+                document.body.classList.add('user-interacted');
+            }
+            
             if (!music) {
                 music = new Audio(musicUrl);
                 music.loop = true;
-                music.volume = 0.6;
-            }
-            
-            if (isPlaying) {
-                music.pause();
-                document.getElementById('musicIcon').className = 'fas fa-play';
-                isPlaying = false;
-            } else {
-                music.play().catch(e => {
-                    console.log("Müzik çalınamadı, lütfen sayfaya tıklayın");
-                    alert("Müziği başlatmak için sayfaya tıklayın");
+                music.volume = 0.5;
+                
+                // تلاش برای پخش
+                music.play().then(() => {
+                    console.log("Music started playing");
+                    isPlaying = true;
+                    document.getElementById('musicIcon').className = 'fas fa-pause';
+                }).catch(error => {
+                    console.log("Auto-play prevented, waiting for user interaction");
+                    // نمایش هشدار
+                    alert("🎵 Müziği başlatmak için lütfen sayfaya bir kez tıklayın, sonra müzik butonuna basın.");
                 });
-                document.getElementById('musicIcon').className = 'fas fa-pause';
-                isPlaying = true;
+            } else {
+                if (isPlaying) {
+                    music.pause();
+                    document.getElementById('musicIcon').className = 'fas fa-play';
+                    isPlaying = false;
+                } else {
+                    music.play().then(() => {
+                        isPlaying = true;
+                        document.getElementById('musicIcon').className = 'fas fa-pause';
+                    }).catch(error => {
+                        console.log("Play failed:", error);
+                        alert("Müzik başlatılamadı. Lütfen sayfaya tıklayıp tekrar deneyin.");
+                    });
+                }
             }
         }
         
@@ -470,51 +537,50 @@
             const envelope = document.getElementById('envelope');
             
             if (!envelope.classList.contains('opened')) {
+                playClickSound();
+                
                 // اضافه کردن کلاس opened
                 envelope.classList.add('opened');
                 
-                // پخش صدا
-                playOpenSound();
+                // پنهان کردن راهنما
+                document.querySelector('.click-hint').style.display = 'none';
+                
+                // پخش صدای باز شدن
+                setTimeout(() => {
+                    const openSound = new Audio(openSoundUrl);
+                    openSound.volume = 0.6;
+                    openSound.play().catch(e => console.log("Open sound error"));
+                    
+                    // صدای جادویی بعد از تأخیر
+                    setTimeout(() => {
+                        const magicSound = new Audio(magicSoundUrl);
+                        magicSound.volume = 0.4;
+                        magicSound.play().catch(e => console.log("Magic sound error"));
+                    }, 500);
+                }, 300);
                 
                 // ایجاد کونفتی
-                createConfetti(150);
+                createConfetti(100);
                 
                 // ایجاد برف
-                createSnow(50);
+                createSnow(30);
                 
-                // پخش موسیقی بعد از 1 ثانیه
+                // پخش موسیقی بعد از 2 ثانیه
                 setTimeout(() => {
-                    if (!isPlaying) {
+                    if (!isPlaying && userInteracted) {
                         toggleMusic();
                     }
-                }, 1000);
-                
-                // غیرفعال کردن کلیک روی مهر
-                document.querySelector('.envelope-seal').style.pointerEvents = 'none';
+                }, 2000);
                 
                 // نمایش پیام
                 setTimeout(() => {
-                    alert("🎊 Pakedi Açtığınız İçin Teşekkürler! 🎊\n\n2026 yılının size mutluluk getirmesini dileriz!");
+                    alert("🎊 Tebrikler! Pakedi Açtınız! 🎊\n\n2026 yılının size mutluluk ve başarı getirmesini dileriz.");
                 }, 1500);
             }
         }
         
-        // پخش صدای باز شدن پاکت
-        function playOpenSound() {
-            const openSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-page-flip-coin-1103.mp3");
-            openSound.volume = 0.5;
-            openSound.play();
-            
-            // صدای دوم با تأخیر
-            setTimeout(() => {
-                const secondSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3");
-                secondSound.volume = 0.4;
-                secondSound.play();
-            }, 300);
-        }
-        
         // ایجاد کونفتی
-        function createConfetti(count = 100) {
+        function createConfetti(count = 80) {
             const colors = ['#b91d1d', '#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'];
             
             for (let i = 0; i < count; i++) {
@@ -549,7 +615,7 @@
         }
         
         // ایجاد برف
-        function createSnow(count = 30) {
+        function createSnow(count = 20) {
             const snowflakes = ['❄️', '❅', '❆', '✢', '✣', '✤'];
             
             for (let i = 0; i < count; i++) {
@@ -585,32 +651,37 @@
         
         // شروع برف‌ها در ابتدا
         window.onload = function() {
-            createSnow(20);
+            createSnow(15);
             
-            // اجازه پخش خودکار صدا با کلیک کاربر
+            // فعال‌سازی کلیک کاربر
             document.body.addEventListener('click', function initAudio() {
-                if (!music) {
-                    music = new Audio(musicUrl);
-                    music.loop = true;
-                    music.volume = 0.6;
-                }
+                userInteracted = true;
+                document.body.classList.add('user-interacted');
+                console.log("User interacted with page");
                 document.body.removeEventListener('click', initAudio);
             });
             
-            // هشدار برای باز کردن پاکت
+            // کلیک روی پاکت (اگر پاکت بسته است)
+            document.getElementById('envelope').addEventListener('click', function(e) {
+                if (!this.classList.contains('opened')) {
+                    playClickSound();
+                    openEnvelope();
+                }
+            });
+            
+            // هشدار برای باز کردن پاکت بعد از 5 ثانیه
             setTimeout(() => {
                 if (!document.getElementById('envelope').classList.contains('opened')) {
-                    document.querySelector('.instructions').innerHTML += 
-                        '<br><br><i class="fas fa-hand-point-up"></i> <strong>Altın mühre tıklayın!</strong>';
+                    document.querySelector('.click-hint').innerHTML = 
+                        '<i class="fas fa-hand-point-up"></i> TIKLAYIN!';
+                    document.querySelector('.click-hint').style.animation = 'hintBounce 0.8s infinite';
                 }
-            }, 3000);
+            }, 5000);
         };
         
-        // کلیک روی پاکت (اگر پاکت بسته است)
-        document.getElementById('envelope').addEventListener('click', function(e) {
-            if (!this.classList.contains('opened') && !e.target.closest('.envelope-seal')) {
-                openEnvelope();
-            }
+        // فعال‌سازی موسیقی با هر کلیک
+        document.addEventListener('click', function() {
+            userInteracted = true;
         });
     </script>
 </body>
