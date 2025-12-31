@@ -80,6 +80,56 @@
             padding: 40px;
         }
 
+        /* لوگوی زیر درپوش (روی بدنه پاکت) */
+        .logo-under-flap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 170px;
+            background: rgba(169, 50, 38, 0.7); /* رنگ هماهنگ با پاکت */
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            box-shadow: 
+                inset 0 0 30px rgba(0, 0, 0, 0.3),
+                0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 5px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-under-flap img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            filter: 
+                drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5))
+                brightness(1.2) 
+                contrast(1.1);
+            padding: 10px;
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        /* جلوه‌های لوگوی زیر درپوش */
+        .logo-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.2), transparent 70%);
+            animation: logoPulse 3s infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes logoPulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
         /* درپوش پاکت */
         .envelope-flap {
             position: absolute;
@@ -92,10 +142,25 @@
             transform-origin: top;
             transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 2;
-            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 
+                0 -8px 25px rgba(0, 0, 0, 0.3),
+                inset 0 5px 20px rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+        }
+
+        /* جلوه خط برش درپوش */
+        .flap-cut-line {
+            position: absolute;
+            top: 95%;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            box-shadow: 0 0 10px #ffd700;
+            z-index: 3;
         }
 
         .envelope-opened .envelope-flap {
@@ -142,86 +207,6 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
-        /* چسب پاکت (عکس اصلی به صورت چسب) */
-        .envelope-sticker {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-5deg);
-            width: 200px;
-            height: 150px;
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.4),
-                inset 0 0 25px rgba(0, 0, 0, 0.1),
-                0 0 30px rgba(255, 255, 255, 0.2);
-            border: 8px solid #ffd700;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-            animation: stickerFloat 5s infinite ease-in-out;
-            overflow: hidden;
-        }
-
-        @keyframes stickerFloat {
-            0%, 100% { 
-                transform: translate(-50%, -50%) rotate(-5deg) translateY(0); 
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            }
-            50% { 
-                transform: translate(-50%, -50%) rotate(-5deg) translateY(-15px); 
-                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
-            }
-        }
-
-        .envelope-sticker img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 5px;
-            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
-        }
-
-        /* جلوه‌های چسب */
-        .sticker-effects {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .sticker-effects::before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border: 2px dashed #ffd700;
-            border-radius: 8px;
-            opacity: 0.5;
-        }
-
-        .sticker-effects::after {
-            content: '✦✦✦';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #ffd700;
-            font-size: 24px;
-            text-shadow: 0 0 10px #ffd700;
-            animation: sparkle 2s infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
         /* آدرس روی پاکت */
         .address {
             position: absolute;
@@ -234,6 +219,7 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
             max-width: 300px;
             animation: addressGlow 4s infinite alternate;
+            z-index: 1;
         }
 
         @keyframes addressGlow {
@@ -285,17 +271,17 @@
             width: 350px;
             height: 250px;
             margin: 20px 0 35px;
-            background: white;
+            background: linear-gradient(145deg, #c0392b, #e74c3c);
             border-radius: 20px;
             padding: 25px;
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.25),
-                inset 0 0 40px rgba(255, 215, 0, 0.15),
-                0 0 30px rgba(231, 76, 60, 0.4);
+                inset 0 0 40px rgba(0, 0, 0, 0.2),
+                0 0 30px rgba(255, 215, 0, 0.4);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 10px solid #e74c3c;
+            border: 10px solid #ffd700;
             position: relative;
             animation: logoGlow 4s infinite alternate;
         }
@@ -303,14 +289,14 @@
         @keyframes logoGlow {
             0% { 
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25),
-                          inset 0 0 40px rgba(255, 215, 0, 0.15),
-                          0 0 30px rgba(231, 76, 60, 0.4);
+                          inset 0 0 40px rgba(0, 0, 0, 0.2),
+                          0 0 30px rgba(255, 215, 0, 0.4);
                 transform: scale(1);
             }
             100% { 
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25),
-                          inset 0 0 40px rgba(255, 215, 0, 0.15),
-                          0 0 50px rgba(231, 76, 60, 0.7);
+                          inset 0 0 40px rgba(0, 0, 0, 0.2),
+                          0 0 50px rgba(255, 215, 0, 0.7);
                 transform: scale(1.02);
             }
         }
@@ -320,7 +306,12 @@
             height: 100%;
             object-fit: contain;
             border-radius: 10px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+            filter: 
+                drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3))
+                brightness(1.2)
+                contrast(1.1);
+            padding: 15px;
+            background: rgba(231, 76, 60, 0.2);
         }
 
         /* جلوه‌های لوگوی بزرگ */
@@ -334,21 +325,23 @@
         .logo-effects::before {
             content: '✦';
             position: absolute;
-            top: -15px;
-            left: -15px;
+            top: -20px;
+            left: -20px;
             color: #ffd700;
-            font-size: 30px;
+            font-size: 35px;
             animation: rotateStar 10s linear infinite;
+            text-shadow: 0 0 15px #ffd700;
         }
 
         .logo-effects::after {
             content: '✦';
             position: absolute;
-            bottom: -15px;
-            right: -15px;
+            bottom: -20px;
+            right: -20px;
             color: #ffd700;
-            font-size: 30px;
+            font-size: 35px;
             animation: rotateStar 10s linear infinite reverse;
+            text-shadow: 0 0 15px #ffd700;
         }
 
         @keyframes rotateStar {
@@ -558,10 +551,10 @@
                 height: 500px;
             }
             
-            .envelope-sticker {
-                width: 150px;
-                height: 110px;
-                padding: 10px;
+            .logo-under-flap {
+                width: 180px;
+                height: 140px;
+                padding: 15px;
             }
             
             .card-logo-large {
@@ -591,7 +584,7 @@
         <i class="fas fa-info-circle"></i> 
         <strong>Nasıl Kullanılır:</strong><br>
         1. Altın mühre tıklayın<br>
-        2. Pakedi açın<br>
+        2. Pakedi açın (Logo ortaya çıkacak)<br>
         3. Müziği başlatmak için ses butonuna tıklayın
     </div>
     
@@ -605,12 +598,12 @@
         <div class="envelope-wrapper" id="envelopeWrapper">
             <!-- پاکت -->
             <div class="envelope">
-                <!-- چسب پاکت (عکس اصلی) -->
-                <div class="envelope-sticker">
+                <!-- لوگوی زیر درپوش (روی بدنه پاکت) -->
+                <div class="logo-under-flap">
                     <img src="https://i.postimg.cc/phNrjGb8/IMG-20241225-0001.png" 
-                         alt="Sticker Logo" 
-                         id="stickerLogo">
-                    <div class="sticker-effects"></div>
+                         alt="Logo Under Flap" 
+                         id="logoUnderFlap">
+                    <div class="logo-glow"></div>
                 </div>
                 
                 <!-- آدرس -->
@@ -624,9 +617,10 @@
             
             <!-- درپوش پاکت -->
             <div class="envelope-flap">
+                <div class="flap-cut-line"></div>
                 <div style="color: white; opacity: 0.8; margin-top: 80px; text-align: center;">
                     <i class="fas fa-lock" style="font-size: 28px;"></i>
-                    <p style="margin-top: 15px; font-size: 1em; font-weight: bold;">Özel Mesaj İçerir</p>
+                    <p style="margin-top: 15px; font-size: 1em; font-weight: bold;">Logo Altında Gizli</p>
                 </div>
             </div>
             
@@ -637,7 +631,7 @@
             
             <!-- کارت داخلی -->
             <div class="inner-card">
-                <!-- لوگوی بزرگ در کارت (همان عکس) -->
+                <!-- لوگوی بزرگ در کارت -->
                 <div class="card-logo-large">
                     <img src="https://i.postimg.cc/phNrjGb8/IMG-20241225-0001.png" 
                          alt="Large Logo" 
@@ -794,7 +788,7 @@
                 
                 // نمایش پیام
                 setTimeout(() => {
-                    alert("🎉 Tebrikler! 2026 Yılı Kartınız Açıldı! 🎉\n\nYeni yılın size ve sevdiklerinize mutluluk getirmesini dileriz.\n\nAzar Boghaz Dadli");
+                    alert("🎉 Tebrikler! Pakedi Açtınız ve Logo Ortaya Çıktı! 🎉\n\nYeni yılın size ve sevdiklerinize mutluluk getirmesini dileriz.\n\nAzar Boghaz Dadli");
                 }, 1500);
                 
                 // پنهان کردن دستورالعمل
@@ -840,32 +834,44 @@
             }
         }
         
+        // بهبود تصویر (حذف پس‌زمینه سفید و تنظیم رنگ)
+        function enhanceImage(imgElement) {
+            imgElement.style.mixBlendMode = 'multiply';
+            imgElement.style.filter = 'brightness(1.1) contrast(1.1) saturate(1.2)';
+        }
+        
         // راه‌اندازی اولیه
         window.onload = function() {
             createStars();
             
             // تنظیم عکس در هر دو محل
-            document.getElementById('stickerLogo').src = ORIGINAL_IMAGE_URL;
-            document.getElementById('largeLogo').src = ORIGINAL_IMAGE_URL;
+            const logoUnderFlap = document.getElementById('logoUnderFlap');
+            const largeLogo = document.getElementById('largeLogo');
             
-            // بررسی خطای عکس
-            document.querySelectorAll('img').forEach(img => {
-                img.onerror = function() {
-                    console.log("Image failed to load:", this.src);
-                    this.parentElement.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
-                    this.parentElement.innerHTML = '<div style="color: #333; text-align: center; padding: 20px; font-weight: bold;">Logo Yüklenemedi</div>';
-                };
-                
+            logoUnderFlap.src = ORIGINAL_IMAGE_URL;
+            largeLogo.src = ORIGINAL_IMAGE_URL;
+            
+            // بهبود تصاویر پس از لود
+            [logoUnderFlap, largeLogo].forEach(img => {
                 img.onload = function() {
                     console.log("Image loaded successfully:", this.src);
-                    // اضافه کردن جلوه‌های اضافی پس از لود
-                    this.style.transition = 'transform 0.5s';
+                    enhanceImage(this);
+                    
+                    // اضافه کردن جلوه‌های hover
                     this.parentElement.addEventListener('mouseenter', () => {
                         this.style.transform = 'scale(1.05)';
+                        this.style.filter = 'brightness(1.2) contrast(1.2) saturate(1.3)';
                     });
                     this.parentElement.addEventListener('mouseleave', () => {
                         this.style.transform = 'scale(1)';
+                        this.style.filter = 'brightness(1.1) contrast(1.1) saturate(1.2)';
                     });
+                };
+                
+                img.onerror = function() {
+                    console.log("Image failed to load:", this.src);
+                    this.parentElement.style.background = 'linear-gradient(45deg, #c0392b, #e74c3c)';
+                    this.parentElement.innerHTML = '<div style="color: white; text-align: center; padding: 20px; font-weight: bold; font-size: 1.2em;">Logo Yüklenemedi</div>';
                 };
             });
             
