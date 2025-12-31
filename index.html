@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* ستاره‌های درخشان در پس‌زمینه */
+        /* ستاره‌های درخشان */
         .star {
             position: fixed;
             background: white;
@@ -41,7 +41,7 @@
         /* کانتینر اصلی */
         .container {
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             position: relative;
             z-index: 10;
         }
@@ -50,7 +50,7 @@
         .envelope-wrapper {
             position: relative;
             width: 100%;
-            height: 500px;
+            height: 550px;
             margin: 0 auto;
             cursor: pointer;
             transition: transform 0.5s;
@@ -142,31 +142,97 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
 
-        /* لوگو روی پاکت */
-        .logo-on-envelope {
+        /* چسب پاکت (عکس اصلی به صورت چسب) */
+        .envelope-sticker {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 180px;
-            max-height: 100px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
-            opacity: 0.9;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            width: 200px;
+            height: 150px;
+            background: white;
             border-radius: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.4),
+                inset 0 0 25px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(255, 255, 255, 0.2);
+            border: 8px solid #ffd700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            animation: stickerFloat 5s infinite ease-in-out;
+            overflow: hidden;
+        }
+
+        @keyframes stickerFloat {
+            0%, 100% { 
+                transform: translate(-50%, -50%) rotate(-5deg) translateY(0); 
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            }
+            50% { 
+                transform: translate(-50%, -50%) rotate(-5deg) translateY(-15px); 
+                box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .envelope-sticker img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        /* جلوه‌های چسب */
+        .sticker-effects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .sticker-effects::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px dashed #ffd700;
+            border-radius: 8px;
+            opacity: 0.5;
+        }
+
+        .sticker-effects::after {
+            content: '✦✦✦';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffd700;
+            font-size: 24px;
+            text-shadow: 0 0 10px #ffd700;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         /* آدرس روی پاکت */
         .address {
             position: absolute;
-            bottom: 60px;
-            text-align: center;
+            bottom: 80px;
+            left: 40px;
             color: white;
-            padding: 20px;
+            padding: 20px 30px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             border: 2px solid rgba(255, 255, 255, 0.2);
+            max-width: 300px;
             animation: addressGlow 4s infinite alternate;
         }
 
@@ -191,12 +257,12 @@
         /* کارت داخل پاکت */
         .inner-card {
             position: absolute;
-            width: 85%;
-            height: 75%;
+            width: 90%;
+            height: 80%;
             background: linear-gradient(145deg, #fffaf0, #fff5e6);
-            border-radius: 20px;
+            border-radius: 25px;
             bottom: -100%;
-            left: 7.5%;
+            left: 5%;
             transition: bottom 1.2s 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             box-shadow: 
                 0 -15px 50px rgba(0, 0, 0, 0.3),
@@ -207,23 +273,87 @@
             align-items: center;
             overflow-y: auto;
             z-index: 1;
-            border: 8px solid #ffd700;
+            border: 10px solid #ffd700;
         }
 
         .envelope-opened .inner-card {
-            bottom: 10%;
+            bottom: 8%;
         }
 
-        /* لوگو در کارت */
-        .card-logo {
-            max-width: 200px;
-            max-height: 120px;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
-            border-radius: 12px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        /* لوگوی بزرگ در کارت */
+        .card-logo-large {
+            width: 350px;
+            height: 250px;
+            margin: 20px 0 35px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.25),
+                inset 0 0 40px rgba(255, 215, 0, 0.15),
+                0 0 30px rgba(231, 76, 60, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 10px solid #e74c3c;
+            position: relative;
+            animation: logoGlow 4s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { 
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25),
+                          inset 0 0 40px rgba(255, 215, 0, 0.15),
+                          0 0 30px rgba(231, 76, 60, 0.4);
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25),
+                          inset 0 0 40px rgba(255, 215, 0, 0.15),
+                          0 0 50px rgba(231, 76, 60, 0.7);
+                transform: scale(1.02);
+            }
+        }
+
+        .card-logo-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 10px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+        }
+
+        /* جلوه‌های لوگوی بزرگ */
+        .logo-effects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .logo-effects::before {
+            content: '✦';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            color: #ffd700;
+            font-size: 30px;
+            animation: rotateStar 10s linear infinite;
+        }
+
+        .logo-effects::after {
+            content: '✦';
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            color: #ffd700;
+            font-size: 30px;
+            animation: rotateStar 10s linear infinite reverse;
+        }
+
+        @keyframes rotateStar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* سال 2026 */
@@ -235,7 +365,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 900;
-            margin: 10px 0 20px;
+            margin: 10px 0 25px;
             letter-spacing: 8px;
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
             animation: yearGlow 3s infinite alternate;
@@ -318,12 +448,6 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
-
-        .emoji:nth-child(1) { animation-delay: 0s; }
-        .emoji:nth-child(2) { animation-delay: 0.2s; }
-        .emoji:nth-child(3) { animation-delay: 0.4s; }
-        .emoji:nth-child(4) { animation-delay: 0.6s; }
-        .emoji:nth-child(5) { animation-delay: 0.8s; }
 
         /* امضا */
         .signature {
@@ -428,15 +552,22 @@
             border-radius: 50%;
         }
 
-        /* صدای کلیک */
-        .click-sound {
-            display: none;
-        }
-
         /* پاسخگو */
         @media (max-width: 768px) {
             .envelope-wrapper {
-                height: 450px;
+                height: 500px;
+            }
+            
+            .envelope-sticker {
+                width: 150px;
+                height: 110px;
+                padding: 10px;
+            }
+            
+            .card-logo-large {
+                width: 250px;
+                height: 180px;
+                padding: 15px;
             }
             
             .year-2026 {
@@ -450,12 +581,6 @@
             .greeting-text {
                 font-size: 1.2em;
                 padding: 0 15px;
-            }
-            
-            .music-player {
-                bottom: 15px;
-                right: 15px;
-                padding: 12px 20px;
             }
         }
     </style>
@@ -476,26 +601,24 @@
         <span id="musicText">Müziği Başlat</span>
     </div>
     
-    <!-- صدای کلیک (پنهان) -->
-    <audio class="click-sound" id="clickSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
-    </audio>
-    
     <div class="container">
         <div class="envelope-wrapper" id="envelopeWrapper">
             <!-- پاکت -->
             <div class="envelope">
-                <!-- لوگو روی پاکت -->
-                <img src="https://i.postimg.cc/F7Ryz3Cm/card.png" 
-                     alt="Logo" 
-                     class="logo-on-envelope"
-                     id="envelopeLogo">
+                <!-- چسب پاکت (عکس اصلی) -->
+                <div class="envelope-sticker">
+                    <img src="https://i.postimg.cc/phNrjGb8/IMG-20241225-0001.png" 
+                         alt="Sticker Logo" 
+                         id="stickerLogo">
+                    <div class="sticker-effects"></div>
+                </div>
                 
                 <!-- آدرس -->
                 <div class="address">
                     <h3>Sevgili Dostuma</h3>
-                    <p>Mutluluk ve Sağlık Dolu</p>
                     <p>2026 Yılı Dileklerimle</p>
+                    <p>Sağlık ve Mutluluk Dolu</p>
+                    <p>Nice Güzel Yıllara</p>
                 </div>
             </div>
             
@@ -503,7 +626,7 @@
             <div class="envelope-flap">
                 <div style="color: white; opacity: 0.8; margin-top: 80px; text-align: center;">
                     <i class="fas fa-lock" style="font-size: 28px;"></i>
-                    <p style="margin-top: 15px; font-size: 1em; font-weight: bold;">Özel Mesaj</p>
+                    <p style="margin-top: 15px; font-size: 1em; font-weight: bold;">Özel Mesaj İçerir</p>
                 </div>
             </div>
             
@@ -514,11 +637,13 @@
             
             <!-- کارت داخلی -->
             <div class="inner-card">
-                <!-- لوگو در کارت -->
-                <img src="https://i.postimg.cc/F7Ryz3Cm/card.png" 
-                     alt="Company Logo" 
-                     class="card-logo"
-                     id="cardLogo">
+                <!-- لوگوی بزرگ در کارت (همان عکس) -->
+                <div class="card-logo-large">
+                    <img src="https://i.postimg.cc/phNrjGb8/IMG-20241225-0001.png" 
+                         alt="Large Logo" 
+                         id="largeLogo">
+                    <div class="logo-effects"></div>
+                </div>
                 
                 <!-- سال 2026 -->
                 <div class="year-2026">2026</div>
@@ -556,6 +681,9 @@
     </div>
 
     <script>
+        // لینک عکس اصلی
+        const ORIGINAL_IMAGE_URL = "https://i.postimg.cc/phNrjGb8/IMG-20241225-0001.png";
+        
         // ایجاد ستاره‌های درخشان
         function createStars() {
             const starsCount = 100;
@@ -581,16 +709,8 @@
             cheer: 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'
         };
         
-        // پخش صدای کلیک
-        function playClickSound() {
-            const clickSound = document.getElementById('clickSound');
-            clickSound.currentTime = 0;
-            clickSound.play().catch(e => console.log("Click sound error"));
-        }
-        
         // پخش صداهای ایموجی
         function playSound(type) {
-            playClickSound();
             const sound = new Audio(sounds[type]);
             sound.volume = 0.5;
             sound.play().catch(e => console.log("Sound play error"));
@@ -601,7 +721,6 @@
         let isPlaying = false;
         let userInteracted = false;
         
-        // موسیقی مطمئن‌تر
         const musicUrl = "https://assets.mixkit.co/music/preview/mixkit-snowflakes-dancing-1248.mp3";
         
         // کنترل موسیقی
@@ -610,8 +729,6 @@
                 userInteracted = true;
                 document.body.classList.add('user-interacted');
             }
-            
-            playClickSound();
             
             if (!music) {
                 music = new Audio(musicUrl);
@@ -650,7 +767,6 @@
             const envelope = document.getElementById('envelopeWrapper');
             
             if (!envelope.classList.contains('envelope-opened')) {
-                playClickSound();
                 envelope.classList.add('envelope-opened');
                 
                 // صداهای باز شدن
@@ -667,19 +783,19 @@
                 }, 200);
                 
                 // کونفتی
-                createConfetti(120);
+                createConfetti(150);
                 
-                // پخش موسیقی بعد از 3 ثانیه
+                // پخش موسیقی بعد از 2 ثانیه
                 setTimeout(() => {
                     if (!isPlaying && userInteracted) {
                         toggleMusic();
                     }
-                }, 3000);
+                }, 2000);
                 
                 // نمایش پیام
                 setTimeout(() => {
                     alert("🎉 Tebrikler! 2026 Yılı Kartınız Açıldı! 🎉\n\nYeni yılın size ve sevdiklerinize mutluluk getirmesini dileriz.\n\nAzar Boghaz Dadli");
-                }, 1800);
+                }, 1500);
                 
                 // پنهان کردن دستورالعمل
                 setTimeout(() => {
@@ -728,18 +844,28 @@
         window.onload = function() {
             createStars();
             
-            // تنظیم لوگوها
-            const logoUrl = "https://i.postimg.cc/F7Ryz3Cm/card.png";
-            document.getElementById('envelopeLogo').src = logoUrl;
-            document.getElementById('cardLogo').src = logoUrl;
+            // تنظیم عکس در هر دو محل
+            document.getElementById('stickerLogo').src = ORIGINAL_IMAGE_URL;
+            document.getElementById('largeLogo').src = ORIGINAL_IMAGE_URL;
             
-            // بررسی خطای لوگو
+            // بررسی خطای عکس
             document.querySelectorAll('img').forEach(img => {
                 img.onerror = function() {
-                    this.src = 'https://via.placeholder.com/200x100/3498db/ffffff?text=LOGO';
-                    this.style.background = '#f8f9fa';
-                    this.style.padding = '20px';
-                    this.style.borderRadius = '10px';
+                    console.log("Image failed to load:", this.src);
+                    this.parentElement.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+                    this.parentElement.innerHTML = '<div style="color: #333; text-align: center; padding: 20px; font-weight: bold;">Logo Yüklenemedi</div>';
+                };
+                
+                img.onload = function() {
+                    console.log("Image loaded successfully:", this.src);
+                    // اضافه کردن جلوه‌های اضافی پس از لود
+                    this.style.transition = 'transform 0.5s';
+                    this.parentElement.addEventListener('mouseenter', () => {
+                        this.style.transform = 'scale(1.05)';
+                    });
+                    this.parentElement.addEventListener('mouseleave', () => {
+                        this.style.transform = 'scale(1)';
+                    });
                 };
             });
             
@@ -758,13 +884,6 @@
                     openEnvelope();
                 }
             });
-            
-            // راهنمای اولیه
-            setTimeout(() => {
-                if (!document.getElementById('envelopeWrapper').classList.contains('envelope-opened')) {
-                    document.querySelector('.seal').style.animation = 'pulse 1s infinite alternate';
-                }
-            }, 2000);
         };
     </script>
 </body>
