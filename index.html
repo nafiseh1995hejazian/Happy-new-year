@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <title>Özel Yeni Yıl Kartı</title>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutlu Yıllar 2026 - Özel Kart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -11,377 +12,451 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 50%, #0c2461 100%);
+            font-family: 'Playfair Display', serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            overflow: hidden;
+            overflow-x: hidden;
         }
-        
+
+        /* ستاره‌های درخشان در پس‌زمینه */
+        .star {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
         /* کانتینر اصلی */
-        .scene {
+        .container {
             width: 100%;
-            max-width: 800px;
-            height: 600px;
+            max-width: 900px;
             position: relative;
-        }
-        
-        /* پاکت نامه */
-        .envelope {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            cursor: pointer;
             z-index: 10;
-            transform-style: preserve-3d;
-            transition: transform 1s ease;
         }
-        
-        .envelope.opened {
-            transform: translateY(-50px);
+
+        /* پاکت */
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.5s;
         }
-        
+
+        .envelope-wrapper:hover {
+            transform: translateY(-10px);
+        }
+
         /* بدنه پاکت */
-        .envelope-body {
+        .envelope {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #b91d1d, #8b0000);
-            border-radius: 10px;
+            background: linear-gradient(145deg, #c0392b, #e74c3c);
+            border-radius: 15px;
             box-shadow: 
-                0 20px 50px rgba(0, 0, 0, 0.5),
-                inset 0 -10px 30px rgba(0, 0, 0, 0.3),
-                inset 0 10px 30px rgba(255, 255, 255, 0.1);
-            border: 15px solid #8b0000;
-            border-top: 30px solid #8b0000;
+                0 25px 60px rgba(0, 0, 0, 0.4),
+                inset 0 -15px 40px rgba(0, 0, 0, 0.2),
+                inset 0 15px 40px rgba(255, 255, 255, 0.1);
+            border: 20px solid #a93226;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 40px;
-            overflow: hidden;
-            z-index: 2;
         }
-        
+
         /* درپوش پاکت */
         .envelope-flap {
             position: absolute;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(145deg, #d32f2f, #b71c1c);
-            border-radius: 10px 10px 0 0;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(160deg, #e74c3c, #c0392b);
+            border-radius: 15px 15px 0 0;
             transform-origin: top;
-            transition: transform 1s ease;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
-            z-index: 3;
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
-        .envelope.opened .envelope-flap {
-            transform: rotateX(-120deg);
+
+        .envelope-opened .envelope-flap {
+            transform: rotateX(-180deg);
         }
-        
-        /* مهر پاکت */
-        .envelope-seal {
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #ffd700, #ff9800);
+
+        /* مهر طلایی */
+        .seal {
+            position: absolute;
+            top: -45px;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff9800);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.3),
-                inset 0 5px 15px rgba(255, 255, 255, 0.2);
-            border: 3px solid #ff9800;
-            position: absolute;
-            top: -40px;
-            z-index: 4;
             cursor: pointer;
-            animation: sealGlow 2s infinite alternate;
+            z-index: 3;
+            border: 4px solid #ff9800;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.6),
+                inset 0 5px 15px rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite alternate;
+            transition: all 0.3s;
         }
-        
-        @keyframes sealGlow {
-            0% { 
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
-                          inset 0 5px 15px rgba(255, 255, 255, 0.2),
-                          0 0 10px #ffd700;
-                transform: scale(1);
-            }
-            100% { 
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
-                          inset 0 5px 15px rgba(255, 255, 255, 0.2),
-                          0 0 25px #ffd700,
-                          0 0 35px #ff9800;
-                transform: scale(1.1);
-            }
+
+        .seal:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 215, 0, 0.8);
         }
-        
-        .envelope-seal i {
-            font-size: 36px;
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        .seal i {
+            font-size: 40px;
             color: #8b0000;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
         }
-        
+
+        /* لوگو روی پاکت */
+        .logo-on-envelope {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 180px;
+            max-height: 100px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+            opacity: 0.9;
+            border-radius: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         /* آدرس روی پاکت */
-        .envelope-address {
+        .address {
+            position: absolute;
+            bottom: 60px;
             text-align: center;
             color: white;
-            margin-top: 50px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            animation: addressGlow 3s infinite alternate;
-            z-index: 2;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: addressGlow 4s infinite alternate;
         }
-        
+
         @keyframes addressGlow {
-            0% { border-color: rgba(255, 255, 255, 0.3); }
-            100% { border-color: rgba(255, 215, 0, 0.6); }
+            0% { border-color: rgba(255, 255, 255, 0.2); }
+            100% { border-color: rgba(255, 215, 0, 0.5); }
         }
-        
-        .envelope-address h2 {
+
+        .address h3 {
             font-family: 'Pacifico', cursive;
-            font-size: 2.2em;
+            font-size: 1.8em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
-        
-        .envelope-address p {
+
+        .address p {
             font-size: 1.1em;
             opacity: 0.9;
             letter-spacing: 1px;
         }
-        
+
         /* کارت داخل پاکت */
-        .card-inside {
+        .inner-card {
             position: absolute;
-            width: 90%;
-            height: 85%;
+            width: 85%;
+            height: 75%;
             background: linear-gradient(145deg, #fffaf0, #fff5e6);
-            border-radius: 15px;
-            top: 110%;
-            left: 5%;
-            transition: top 1s 0.5s ease;
+            border-radius: 20px;
+            bottom: -100%;
+            left: 7.5%;
+            transition: bottom 1.2s 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             box-shadow: 
-                0 -10px 40px rgba(0, 0, 0, 0.2),
-                inset 0 0 50px rgba(255, 215, 0, 0.1);
+                0 -15px 50px rgba(0, 0, 0, 0.3),
+                inset 0 0 60px rgba(255, 215, 0, 0.15);
             padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
+            overflow-y: auto;
             z-index: 1;
-            border: 5px solid #ffd700;
+            border: 8px solid #ffd700;
         }
-        
-        .envelope.opened .card-inside {
-            top: 5%;
+
+        .envelope-opened .inner-card {
+            bottom: 10%;
         }
-        
-        /* محتوای کارت */
-        .card-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s 1s ease;
+
+        /* لوگو در کارت */
+        .card-logo {
+            max-width: 200px;
+            max-height: 120px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+            border-radius: 12px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
-        
-        .envelope.opened .card-content {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* هدر کارت */
-        .card-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .card-year {
+
+        /* سال 2026 */
+        .year-2026 {
             font-family: 'Dancing Script', cursive;
-            font-size: 5em;
-            background: linear-gradient(45deg, #b91d1d, #ff6b6b, #ffd700);
+            font-size: 5.5em;
+            background: linear-gradient(45deg, #c0392b, #e74c3c, #ffd700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 900;
-            letter-spacing: 5px;
-            margin: 10px 0;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
-            animation: yearPulse 3s infinite alternate;
+            margin: 10px 0 20px;
+            letter-spacing: 8px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+            animation: yearGlow 3s infinite alternate;
         }
-        
-        @keyframes yearPulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+
+        @keyframes yearGlow {
+            0% { 
+                filter: drop-shadow(0 0 5px rgba(192, 57, 43, 0.3));
+                transform: scale(1);
+            }
+            100% { 
+                filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+                transform: scale(1.03);
+            }
         }
-        
+
+        /* عنوان */
         .card-title {
             color: #2c3e50;
             font-size: 2.8em;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-family: 'Pacifico', cursive;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* متن تبریک */
-        .greeting-message {
             text-align: center;
-            line-height: 1.8;
-            font-size: 1.3em;
+        }
+
+        /* متن تبریک */
+        .greeting-text {
+            text-align: center;
+            line-height: 1.9;
+            font-size: 1.4em;
             color: #34495e;
-            margin: 20px 0;
-            padding: 0 20px;
+            margin: 25px 0 35px;
+            padding: 0 25px;
+            max-width: 700px;
         }
-        
-        .greeting-message p {
-            margin-bottom: 15px;
+
+        .greeting-text p {
+            margin-bottom: 18px;
             position: relative;
+            padding: 0 30px;
         }
-        
-        .greeting-message p.highlight {
-            color: #b91d1d;
+
+        .greeting-text p.highlight {
+            color: #c0392b;
             font-weight: bold;
-            font-size: 1.5em;
-            padding: 10px;
-            background: rgba(255, 215, 0, 0.1);
-            border-radius: 10px;
-            margin: 20px 0;
+            font-size: 1.6em;
+            padding: 12px 25px;
+            background: linear-gradient(120deg, rgba(255, 215, 0, 0.15), rgba(255, 152, 0, 0.15));
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #ffd700;
+            border-right: 5px solid #ffd700;
+            display: inline-block;
         }
-        
-        /* امضا */
-        .card-signature {
-            text-align: right;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 3px double #b91d1d;
-            width: 100%;
-        }
-        
-        .signature-name {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3em;
-            color: #b91d1d;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-            margin-bottom: 5px;
-        }
-        
-        .signature-title {
-            color: #7f8c8d;
-            font-size: 1.2em;
-            font-style: italic;
-        }
-        
-        /* دکمه موسیقی */
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: rgba(185, 29, 29, 0.9);
-            border-radius: 50%;
+
+        /* ایموجی‌ها */
+        .emoji-row {
             display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 25px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .emoji {
+            font-size: 3em;
+            animation: bounce 2s infinite;
             cursor: pointer;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        .emoji:hover {
+            transform: scale(1.3) rotate(15deg);
+            animation-play-state: paused;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .emoji:nth-child(1) { animation-delay: 0s; }
+        .emoji:nth-child(2) { animation-delay: 0.2s; }
+        .emoji:nth-child(3) { animation-delay: 0.4s; }
+        .emoji:nth-child(4) { animation-delay: 0.6s; }
+        .emoji:nth-child(5) { animation-delay: 0.8s; }
+
+        /* امضا */
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 4px double #c0392b;
+            width: 100%;
+            direction: rtl;
+        }
+
+        .signature-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.2em;
+            color: #c0392b;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            animation: nameGlow 4s infinite alternate;
+        }
+
+        @keyframes nameGlow {
+            0% { 
+                color: #c0392b;
+                text-shadow: 0 0 5px rgba(192, 57, 43, 0.3);
+            }
+            100% { 
+                color: #e74c3c;
+                text-shadow: 0 0 15px rgba(231, 76, 60, 0.6);
+            }
+        }
+
+        .signature-title {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* کنترل موسیقی */
+        .music-player {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(192, 57, 43, 0.95);
+            border-radius: 50px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
             z-index: 100;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             border: 3px solid #ffd700;
+            transition: all 0.3s;
+            cursor: pointer;
         }
-        
-        .music-control:hover {
-            transform: scale(1.1);
-            background: rgba(139, 0, 0, 0.9);
+
+        .music-player:hover {
+            transform: scale(1.05);
+            background: rgba(231, 76, 60, 0.95);
         }
-        
-        .music-control i {
+
+        .music-player i {
             font-size: 24px;
             color: white;
         }
-        
-        /* کونفتی */
-        .confetti-piece {
-            position: fixed;
-            width: 15px;
-            height: 15px;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1000;
-            border-radius: 50%;
+
+        .music-player span {
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
         }
-        
+
         /* دستورالعمل */
         .instructions {
             position: fixed;
             top: 20px;
             left: 20px;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.9em;
-            max-width: 250px;
-            border-left: 4px solid #ffd700;
-            animation: instructionsPulse 4s infinite;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 0.95em;
+            max-width: 280px;
+            border-left: 5px solid #ffd700;
             z-index: 100;
+            animation: fadeIn 2s ease;
         }
-        
-        @keyframes instructionsPulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        /* برف‌ها */
-        .snowflake {
+
+        /* کونفتی */
+        .confetti {
             position: fixed;
-            color: white;
-            font-size: 20px;
+            width: 20px;
+            height: 20px;
             opacity: 0;
             pointer-events: none;
-            z-index: 5;
+            z-index: 999;
+            border-radius: 50%;
         }
-        
-        /* دکمه راهنما */
-        .click-hint {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 215, 0, 0.9);
-            color: #8b0000;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            animation: hintBounce 2s infinite;
-            z-index: 5;
-            cursor: pointer;
-            border: 2px solid #8b0000;
-        }
-        
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-        
+
         /* صدای کلیک */
         .click-sound {
             display: none;
+        }
+
+        /* پاسخگو */
+        @media (max-width: 768px) {
+            .envelope-wrapper {
+                height: 450px;
+            }
+            
+            .year-2026 {
+                font-size: 4em;
+            }
+            
+            .card-title {
+                font-size: 2.2em;
+            }
+            
+            .greeting-text {
+                font-size: 1.2em;
+                padding: 0 15px;
+            }
+            
+            .music-player {
+                bottom: 15px;
+                right: 15px;
+                padding: 12px 20px;
+            }
         }
     </style>
 </head>
@@ -389,144 +464,182 @@
     <!-- دستورالعمل -->
     <div class="instructions">
         <i class="fas fa-info-circle"></i> 
-        <strong>Nasıl Açılır:</strong><br>
+        <strong>Nasıl Kullanılır:</strong><br>
         1. Altın mühre tıklayın<br>
-        2. Pencereyi açın<br>
-        3. Müziği başlatmak için butona tıklayın
+        2. Pakedi açın<br>
+        3. Müziği başlatmak için ses butonuna tıklayın
     </div>
     
     <!-- کنترل موسیقی -->
-    <div class="music-control" onclick="toggleMusic()">
+    <div class="music-player" onclick="toggleMusic()">
         <i class="fas fa-play" id="musicIcon"></i>
+        <span id="musicText">Müziği Başlat</span>
     </div>
     
     <!-- صدای کلیک (پنهان) -->
-    <audio class="click-sound" id="clickSound">
+    <audio class="click-sound" id="clickSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- صحنه اصلی -->
-    <div class="scene">
-        <!-- راهنمای کلیک -->
-        <div class="click-hint" onclick="openEnvelope()">
-            <i class="fas fa-hand-point-up"></i> Mühre Tıklayın
-        </div>
-        
-        <!-- پاکت نامه -->
-        <div class="envelope" id="envelope">
-            <!-- بدنه پاکت -->
-            <div class="envelope-body">
-                <!-- آدرس روی پاکت -->
-                <div class="envelope-address">
-                    <h2>Sevgili Dostuma</h2>
-                    <p>Mutluluklar Caddesi</p>
-                    <p>Yeni Yıl Sokak No: 2026</p>
-                    <p>Kalpler Şehri</p>
-                </div>
+    <div class="container">
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <!-- پاکت -->
+            <div class="envelope">
+                <!-- لوگو روی پاکت -->
+                <img src="https://i.postimg.cc/F7Ryz3Cm/card.png" 
+                     alt="Logo" 
+                     class="logo-on-envelope"
+                     id="envelopeLogo">
                 
-                <!-- مهر پاکت -->
-                <div class="envelope-seal" onclick="playClickSound(); openEnvelope()">
-                    <i class="fas fa-gem"></i>
+                <!-- آدرس -->
+                <div class="address">
+                    <h3>Sevgili Dostuma</h3>
+                    <p>Mutluluk ve Sağlık Dolu</p>
+                    <p>2026 Yılı Dileklerimle</p>
                 </div>
             </div>
             
             <!-- درپوش پاکت -->
             <div class="envelope-flap">
-                <div style="color: white; opacity: 0.7; margin-top: 60px;">
-                    <i class="fas fa-lock" style="font-size: 24px;"></i>
-                    <p style="margin-top: 10px; font-size: 0.9em;">Gizli Mesaj</p>
+                <div style="color: white; opacity: 0.8; margin-top: 80px; text-align: center;">
+                    <i class="fas fa-lock" style="font-size: 28px;"></i>
+                    <p style="margin-top: 15px; font-size: 1em; font-weight: bold;">Özel Mesaj</p>
                 </div>
             </div>
             
-            <!-- کارت داخل پاکت -->
-            <div class="card-inside">
-                <div class="card-content">
-                    <!-- هدر کارت -->
-                    <div class="card-header">
-                        <div class="card-year">2026</div>
-                        <h1 class="card-title">🎉 Mutlu Yıllar! 🎉</h1>
-                    </div>
-                    
-                    <!-- متن تبریک -->
-                    <div class="greeting-message">
-                        <p>Sevgili Arkadaşım,</p>
-                        <p>Yeni yılın sana ve sevdiklerine</p>
-                        <p class="highlight">sağlık, mutluluk ve başarı</p>
-                        <p>getirmesini dilerim.</p>
-                        <p>2026, hayallerinin gerçek olduğu,</p>
-                        <p>hedeflerine ulaştığın bir yıl olsun.</p>
-                        <p>✨ İyi Seneler! ✨</p>
-                    </div>
-                    
-                    <!-- امضا -->
-                    <div class="card-signature">
-                        <div class="signature-name">Azar Boghaz Dadli</div>
-                        <div class="signature-title">En İyi Dileklerimle</div>
-                    </div>
+            <!-- مهر طلایی -->
+            <div class="seal" onclick="openEnvelope()">
+                <i class="fas fa-gift"></i>
+            </div>
+            
+            <!-- کارت داخلی -->
+            <div class="inner-card">
+                <!-- لوگو در کارت -->
+                <img src="https://i.postimg.cc/F7Ryz3Cm/card.png" 
+                     alt="Company Logo" 
+                     class="card-logo"
+                     id="cardLogo">
+                
+                <!-- سال 2026 -->
+                <div class="year-2026">2026</div>
+                
+                <!-- عنوان -->
+                <h1 class="card-title">🌟 Mutlu Yıllar! 🌟</h1>
+                
+                <!-- ایموجی‌ها -->
+                <div class="emoji-row">
+                    <div class="emoji" onclick="playSound('sparkle')">🎇</div>
+                    <div class="emoji" onclick="playSound('bell')">🎁</div>
+                    <div class="emoji" onclick="playSound('party')">🎉</div>
+                    <div class="emoji" onclick="playSound('firework')">✨</div>
+                    <div class="emoji" onclick="playSound('cheer')">🥂</div>
+                </div>
+                
+                <!-- متن تبریک -->
+                <div class="greeting-text">
+                    <p>Değerli Dostlarımız,</p>
+                    <p>Yeni yılın sizlere ve sevdiklerinize</p>
+                    <p class="highlight">sağlık, mutluluk, başarı ve bol kazanç</p>
+                    <p>getirmesini dileriz.</p>
+                    <p>2026 yılı, hayallerinizin gerçeğe dönüştüğü,</p>
+                    <p>hedeflerinize ulaştığınız bir yıl olsun.</p>
+                    <p>🎊 İyi Seneler Dileriz! 🎊</p>
+                </div>
+                
+                <!-- امضا -->
+                <div class="signature">
+                    <div class="signature-name">Azar Boghaz Dadli</div>
+                    <div class="signature-title">En İyi Dileklerimizle</div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- برف‌ها -->
-    <div id="snowContainer"></div>
 
     <script>
-        // موسیقی
-        let music = null;
-        let isPlaying = false;
-        let userInteracted = false;
+        // ایجاد ستاره‌های درخشان
+        function createStars() {
+            const starsCount = 100;
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = `${Math.random() * 4 + 1}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(star);
+            }
+        }
         
-        // آهنگ جایگزین (کوتاه‌تر و مطمئن‌تر)
-        const musicUrl = "https://assets.mixkit.co/music/preview/mixkit-a-very-happy-christmas-897.mp3";
-        
-        // صداهای دیگر
-        const openSoundUrl = "https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3";
-        const magicSoundUrl = "https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3";
+        // صداها
+        const sounds = {
+            sparkle: 'https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3',
+            bell: 'https://assets.mixkit.co/sfx/preview/mixkit-christmas-bells-299.mp3',
+            party: 'https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-laugh-464.mp3',
+            firework: 'https://assets.mixkit.co/sfx/preview/mixkit-fireworks-show-audio-1170.mp3',
+            cheer: 'https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3'
+        };
         
         // پخش صدای کلیک
         function playClickSound() {
             const clickSound = document.getElementById('clickSound');
             clickSound.currentTime = 0;
-            clickSound.play().catch(e => console.log("Click sound couldn't play"));
+            clickSound.play().catch(e => console.log("Click sound error"));
         }
+        
+        // پخش صداهای ایموجی
+        function playSound(type) {
+            playClickSound();
+            const sound = new Audio(sounds[type]);
+            sound.volume = 0.5;
+            sound.play().catch(e => console.log("Sound play error"));
+        }
+        
+        // موسیقی اصلی
+        let music = null;
+        let isPlaying = false;
+        let userInteracted = false;
+        
+        // موسیقی مطمئن‌تر
+        const musicUrl = "https://assets.mixkit.co/music/preview/mixkit-snowflakes-dancing-1248.mp3";
         
         // کنترل موسیقی
         function toggleMusic() {
-            playClickSound();
-            
             if (!userInteracted) {
                 userInteracted = true;
                 document.body.classList.add('user-interacted');
             }
             
+            playClickSound();
+            
             if (!music) {
                 music = new Audio(musicUrl);
                 music.loop = true;
-                music.volume = 0.5;
+                music.volume = 0.4;
                 
-                // تلاش برای پخش
                 music.play().then(() => {
-                    console.log("Music started playing");
+                    console.log("Music started successfully");
                     isPlaying = true;
                     document.getElementById('musicIcon').className = 'fas fa-pause';
+                    document.getElementById('musicText').textContent = 'Müzik Dur';
                 }).catch(error => {
-                    console.log("Auto-play prevented, waiting for user interaction");
-                    // نمایش هشدار
-                    alert("🎵 Müziği başlatmak için lütfen sayfaya bir kez tıklayın, sonra müzik butonuna basın.");
+                    console.log("Music auto-play prevented");
+                    alert("🎵 Müziği başlatmak için lütfen önce sayfaya tıklayın, sonra müzik butonuna basın.");
                 });
             } else {
                 if (isPlaying) {
                     music.pause();
                     document.getElementById('musicIcon').className = 'fas fa-play';
+                    document.getElementById('musicText').textContent = 'Müziği Başlat';
                     isPlaying = false;
                 } else {
                     music.play().then(() => {
                         isPlaying = true;
                         document.getElementById('musicIcon').className = 'fas fa-pause';
+                        document.getElementById('musicText').textContent = 'Müzik Dur';
                     }).catch(error => {
-                        console.log("Play failed:", error);
-                        alert("Müzik başlatılamadı. Lütfen sayfaya tıklayıp tekrar deneyin.");
+                        console.log("Music play failed:", error);
                     });
                 }
             }
@@ -534,65 +647,62 @@
         
         // باز کردن پاکت
         function openEnvelope() {
-            const envelope = document.getElementById('envelope');
+            const envelope = document.getElementById('envelopeWrapper');
             
-            if (!envelope.classList.contains('opened')) {
+            if (!envelope.classList.contains('envelope-opened')) {
                 playClickSound();
+                envelope.classList.add('envelope-opened');
                 
-                // اضافه کردن کلاس opened
-                envelope.classList.add('opened');
-                
-                // پنهان کردن راهنما
-                document.querySelector('.click-hint').style.display = 'none';
-                
-                // پخش صدای باز شدن
+                // صداهای باز شدن
                 setTimeout(() => {
-                    const openSound = new Audio(openSoundUrl);
+                    const openSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3");
                     openSound.volume = 0.6;
                     openSound.play().catch(e => console.log("Open sound error"));
                     
-                    // صدای جادویی بعد از تأخیر
                     setTimeout(() => {
-                        const magicSound = new Audio(magicSoundUrl);
+                        const magicSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3");
                         magicSound.volume = 0.4;
                         magicSound.play().catch(e => console.log("Magic sound error"));
-                    }, 500);
-                }, 300);
+                    }, 300);
+                }, 200);
                 
-                // ایجاد کونفتی
-                createConfetti(100);
+                // کونفتی
+                createConfetti(120);
                 
-                // ایجاد برف
-                createSnow(30);
-                
-                // پخش موسیقی بعد از 2 ثانیه
+                // پخش موسیقی بعد از 3 ثانیه
                 setTimeout(() => {
                     if (!isPlaying && userInteracted) {
                         toggleMusic();
                     }
-                }, 2000);
+                }, 3000);
                 
                 // نمایش پیام
                 setTimeout(() => {
-                    alert("🎊 Tebrikler! Pakedi Açtınız! 🎊\n\n2026 yılının size mutluluk ve başarı getirmesini dileriz.");
-                }, 1500);
+                    alert("🎉 Tebrikler! 2026 Yılı Kartınız Açıldı! 🎉\n\nYeni yılın size ve sevdiklerinize mutluluk getirmesini dileriz.\n\nAzar Boghaz Dadli");
+                }, 1800);
+                
+                // پنهان کردن دستورالعمل
+                setTimeout(() => {
+                    document.querySelector('.instructions').style.opacity = '0.5';
+                }, 1000);
             }
         }
         
         // ایجاد کونفتی
-        function createConfetti(count = 80) {
-            const colors = ['#b91d1d', '#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1'];
+        function createConfetti(count = 100) {
+            const colors = ['#ffd700', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
             
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
-                    confetti.className = 'confetti-piece';
+                    confetti.className = 'confetti';
                     confetti.style.left = `${Math.random() * 100}%`;
                     confetti.style.top = `${Math.random() * 100}%`;
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                     confetti.style.opacity = '1';
-                    confetti.style.width = `${Math.random() * 15 + 10}px`;
+                    confetti.style.width = `${Math.random() * 20 + 10}px`;
                     confetti.style.height = confetti.style.width;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
                     
                     document.body.appendChild(confetti);
                     
@@ -603,86 +713,59 @@
                             opacity: 1 
                         },
                         { 
-                            transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg) scale(0)`,
+                            transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 720}deg) scale(0)`,
                             opacity: 0 
                         }
                     ], {
                         duration: Math.random() * 3000 + 2000,
                         easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
                     }).onfinish = () => confetti.remove();
-                }, i * 30);
+                }, i * 20);
             }
         }
         
-        // ایجاد برف
-        function createSnow(count = 20) {
-            const snowflakes = ['❄️', '❅', '❆', '✢', '✣', '✤'];
-            
-            for (let i = 0; i < count; i++) {
-                const snow = document.createElement('div');
-                snow.className = 'snowflake';
-                snow.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-                snow.style.left = `${Math.random() * 100}%`;
-                snow.style.fontSize = `${Math.random() * 20 + 15}px`;
-                snow.style.opacity = `${Math.random() * 0.7 + 0.3}`;
-                
-                document.getElementById('snowContainer').appendChild(snow);
-                
-                // انیمیشن برف
-                snow.animate([
-                    { 
-                        transform: `translateY(-100px) translateX(${Math.random() * 100 - 50}px) rotate(0deg)`,
-                        opacity: 0 
-                    },
-                    { 
-                        opacity: 1 
-                    },
-                    { 
-                        transform: `translateY(${window.innerHeight}px) translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`,
-                        opacity: 0 
-                    }
-                ], {
-                    duration: Math.random() * 5000 + 5000,
-                    delay: Math.random() * 2000,
-                    easing: 'linear'
-                }).onfinish = () => snow.remove();
-            }
-        }
-        
-        // شروع برف‌ها در ابتدا
+        // راه‌اندازی اولیه
         window.onload = function() {
-            createSnow(15);
+            createStars();
             
-            // فعال‌سازی کلیک کاربر
-            document.body.addEventListener('click', function initAudio() {
-                userInteracted = true;
-                document.body.classList.add('user-interacted');
-                console.log("User interacted with page");
-                document.body.removeEventListener('click', initAudio);
+            // تنظیم لوگوها
+            const logoUrl = "https://i.postimg.cc/F7Ryz3Cm/card.png";
+            document.getElementById('envelopeLogo').src = logoUrl;
+            document.getElementById('cardLogo').src = logoUrl;
+            
+            // بررسی خطای لوگو
+            document.querySelectorAll('img').forEach(img => {
+                img.onerror = function() {
+                    this.src = 'https://via.placeholder.com/200x100/3498db/ffffff?text=LOGO';
+                    this.style.background = '#f8f9fa';
+                    this.style.padding = '20px';
+                    this.style.borderRadius = '10px';
+                };
             });
             
-            // کلیک روی پاکت (اگر پاکت بسته است)
-            document.getElementById('envelope').addEventListener('click', function(e) {
-                if (!this.classList.contains('opened')) {
-                    playClickSound();
+            // فعال‌سازی تعامل کاربر
+            document.addEventListener('click', function() {
+                if (!userInteracted) {
+                    userInteracted = true;
+                    document.body.classList.add('user-interacted');
+                    console.log("User interaction registered");
+                }
+            });
+            
+            // کلیک روی پاکت
+            document.getElementById('envelopeWrapper').addEventListener('click', function(e) {
+                if (!this.classList.contains('envelope-opened') && !e.target.closest('.seal')) {
                     openEnvelope();
                 }
             });
             
-            // هشدار برای باز کردن پاکت بعد از 5 ثانیه
+            // راهنمای اولیه
             setTimeout(() => {
-                if (!document.getElementById('envelope').classList.contains('opened')) {
-                    document.querySelector('.click-hint').innerHTML = 
-                        '<i class="fas fa-hand-point-up"></i> TIKLAYIN!';
-                    document.querySelector('.click-hint').style.animation = 'hintBounce 0.8s infinite';
+                if (!document.getElementById('envelopeWrapper').classList.contains('envelope-opened')) {
+                    document.querySelector('.seal').style.animation = 'pulse 1s infinite alternate';
                 }
-            }, 5000);
+            }, 2000);
         };
-        
-        // فعال‌سازی موسیقی با هر کلیک
-        document.addEventListener('click', function() {
-            userInteracted = true;
-        });
     </script>
 </body>
 </html>
